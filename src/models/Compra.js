@@ -1,36 +1,35 @@
 const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 
 class Compra extends Sequelize.Model {
   static init(sequelize) {
     super.init({
-      idCompra: {
+      id_compra: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      idUsuario: {
+      id_usuario: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'usuario',
-          key: 'idUsuario'
+          model: 'usuarios',
+          key: 'id_usuario'
         }
       },
-      dataCompra: {
+      data_compra: {
         type: Sequelize.DATEONLY,
         allowNull: false,
-        validate: {
-          isDate: true
-        }
+
       },
-      valorTotal: {
+      valor_total: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         validate: {
           min: 0
         }
       },
-      formaPagamento: {
+      forma_pagamento: {
         type: Sequelize.STRING(255),
         allowNull: false,
         validate: {

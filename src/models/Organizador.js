@@ -1,31 +1,30 @@
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 
-class Organizador extends Sequelize.Model {
-  static init(sequelize) {
-    super.init({
-      idOrganizador: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-      },
-      nome: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-        validate: {
-          len: [3, 255] // Validação simples de comprimento
-        }
-      },
-      email: {
-        type: Sequelize.STRING(255),
-        allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: true
-        }
-      },
-      senha: {
-        type: Sequelize.STRING(255),
+class Organizadores extends Sequelize.Model {
+  static init(sequelize) {
+    super.init({
+      id_organizador: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      nome: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+        validate: {
+          len: [3, 255] // Validação simples de comprimento
+        }
+      },
+      email: {
+        type: Sequelize.STRING(255),
+        allowNull: false,
+        unique: true,
+        validate: {
+          isEmail: true
+        }
+      },
+      senha: {        type: Sequelize.STRING(255),
         allowNull: false,
         validate: {
           len: [8, 255], 
@@ -46,19 +45,6 @@ class Organizador extends Sequelize.Model {
           }
         }
       },
-      cnpj: {
-        type: Sequelize.STRING(18),
-        allowNull: false,
-        unique: true,
-        validate: {
-            isCNPJValid(value) {
-              if (!/^\d{14}$/.test(value)) {
-                throw new Error('CNPJ inválido: formato incorreto.');
-              }
-            }
-        }
-        
-      }
     }, {
       sequelize,
       hooks: {
@@ -72,7 +58,10 @@ class Organizador extends Sequelize.Model {
             organizador.senha = await bcrypt.hash(organizador.senha, salt);
           }
         }
-      }
+      },
+      options: {
+          freezeTableName: true // Evita a pluralização do nome da tabela
+        }
     });
 
     return this;
@@ -83,4 +72,4 @@ class Organizador extends Sequelize.Model {
   }
 }
 
-module.exports = Organizador;
+module.exports = Organizadores;

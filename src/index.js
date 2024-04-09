@@ -18,7 +18,7 @@ class AppController {
     router()
     {
         const routes = require('./router/router');
-        this.express.use('/eventos/', routes);
+        this.express.use('/venda_evento/', routes);
     }
 
 }

@@ -1,9 +1,10 @@
 const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 
 class Evento extends Sequelize.Model {
   static init(sequelize) {
     super.init({
-      idEvento: {
+      id_evento: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -15,50 +16,47 @@ class Evento extends Sequelize.Model {
           len: [3, 255]
         }
       },
-      data: {
-        type: Sequelize.DATEONLY,
+      data_hora: { 
+        type: Sequelize.DATE,
         allowNull: false,
-        validate: {
-          isDate: true,
-          isAfter: new Date()
-        }
+
       },
-      hora: {
-        type: Sequelize.TIME,
+      cnpj: {
+        type: Sequelize.STRING(18),
         allowNull: false,
+        unique: true,
         validate: {
-          isBetween: ['00:00', '23:59']
-        }
+            isCNPJValid(value) {
+              if (!/^\d{14}$/.test(value)) {
+                throw new Error('CNPJ inválido: formato incorreto.');
+              }
+           }
+        }    
       },
-      local: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
-      quantidadeIngressos: {
+      quantidade_ingressos: {
         type: Sequelize.INTEGER,
         allowNull: false,
         validate: {
           min: 1
         }
       },
-      valorIngresso: {
+      valor_ingresso: {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
         validate: {
           min: 0
         }
       },
-      idOrganizador: {
+      id_organizador: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'organizador',
-          key: 'idOrganizador'
+          model: 'organizadores', 
+          key: 'id_organizador'
         }
       }
     }, {
       sequelize,
-
     });
 
     return this;

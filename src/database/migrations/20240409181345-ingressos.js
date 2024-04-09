@@ -1,9 +1,9 @@
-const Sequelize = require('sequelize');
-const bcrypt = require('bcrypt');
+'use strict';
 
-class Ingresso extends Sequelize.Model {
-  static init(sequelize) {
-    super.init({
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up (queryInterface, Sequelize) {
+   await queryInterface.createTable('ingressos', {
       id_ingresso: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -35,25 +35,35 @@ class Ingresso extends Sequelize.Model {
       },
       data_compra: {
         type: Sequelize.DATEONLY,
-        allowNull: false,
+        allowNull: false
       },
       codigo_ingresso: {
         type: Sequelize.STRING(255),
-        allowNull: false,
-        unique: true
+        allowNull: false
       },
       status: {
-        type: Sequelize.STRING(10),
+        type: Sequelize.STRING(10), 
         allowNull: false,
         defaultValue: 'ativo'
-      }
-    }, {
-      sequelize,
-
+      },
+      created_at:{
+        type: Sequelize.DATE,
+        allowNull: false
+       },
+       updated_at:{
+        type: Sequelize.DATE,
+        allowNull: false
+       }
+    },
+    {
+      tableName: 'ingressos', // Define explicitamente o nome da tabela como 'usuarios'
+        timestamps: false // Evita que sejam criados os campos createdAt e updatedAt 
     });
+    
+  },
 
-    return this;
+  async down (queryInterface, Sequelize) {
+     await queryInterface.dropTable('ingressos');
+    
   }
-}
-
-module.exports = Ingresso;
+};

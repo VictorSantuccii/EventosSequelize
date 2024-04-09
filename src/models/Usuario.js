@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 class Usuario extends Sequelize.Model {
   static init(sequelize) {
     super.init({
-      idUsuario: {
+      id_usuario: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true

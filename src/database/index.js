@@ -6,8 +6,9 @@ const databaseConfig = require('../config/database');
  const Ingresso = require('../models/Ingresso')
  const Organizador = require('../models/Organizador')
  const Usuario = require('../models/Usuario')
+ const Localizacao = require('../models/Localizacao')
 
- const models = [Compra, Evento, Ingresso, Organizador, Usuario];
+ const models = [Compra, Evento, Ingresso, Organizador, Usuario, Localizacao];
 
 const connection = new sequelize.Sequelize(databaseConfig);
 

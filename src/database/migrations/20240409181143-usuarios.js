@@ -3,8 +3,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('usuario', {
-      idUsuario: {
+    await queryInterface.createTable('usuarios', {
+      id_usuario: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
@@ -23,20 +23,30 @@ module.exports = {
         allowNull: false
       },
       cpf: {
-        type: Sequelize.STRING(14),
+        type: Sequelize.STRING(11),
         allowNull: false,
         unique: true
       },
       telefone: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.STRING(20),
         allowNull: false
-      }
+      },
+      created_at:{
+         type: Sequelize.DATE,
+         allowNull: false
+       },
+         updated_at:{
+         type: Sequelize.DATE,
+         allowNull: false
+       }
+    }, 
+    {
+      tableName: 'usuarios', // Define explicitamente o nome da tabela como 'usuarios'
+      timestamps: false // Evita que sejam criados os campos createdAt e updatedAt 
     });    
-     
   },
 
   async down (queryInterface, Sequelize) {
-     await queryInterface.dropTable('usuario');
-     
+    await queryInterface.dropTable('usuarios');   
   }
 };

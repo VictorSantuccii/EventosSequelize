@@ -7,6 +7,14 @@ const compraController = require('../controllers/compraController');
 const ingressoController = require('../controllers/ingressoController');
 const organizadorController = require('../controllers/organizadorController');
 const usuarioController = require('../controllers/usuarioController');
+const localizacaoController = require('../controllers/localizacaoController');
+
+// Rotas para Localização
+router.get('/localizacoes', localizacaoController.buscarTodasLocalizacoes);
+router.get('/localizacoes/:id', localizacaoController.buscarLocalizacaoPorId);
+router.post('/localizacoes', localizacaoController.criarLocalizacao);
+router.put('/localizacoes/:id', localizacaoController.atualizarLocalizacao);
+router.delete('/localizacoes/:id', localizacaoController.excluirLocalizacao);
 
 // Rotas para Eventos
 router.get('/eventos', eventoController.buscarTodosEventos);
